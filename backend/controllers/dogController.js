@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import Dog from '../models/dogModel.js'
+import mongoose from 'mongoose'
 
 // @desc    Fetch all dogs
 // @route   GET /api/dogs
@@ -16,12 +17,26 @@ const getDogs = asyncHandler(async (req, res) => {
         },
       }
     : {}
+    
+  const ids = req.query.ids?.split(',')?.map(id => mongoose.Types.ObjectId(id))
 
-  const count = await Dog.countDocuments({ ...keyword })
-  const dogs = await Dog.find({ ...keyword })
-    .limit(pageSize)
-    .skip(pageSize * (page - 1))
+  let dogs = []
+  let count = 0
 
+  if (ids?.length > 0) {
+    count = await Dog.countDocuments({'_id': { $in: ids }})
+
+    dogs = await Dog.find({'_id': { $in: ids }})
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+  } else {
+    count = await Dog.countDocuments({ ...keyword })
+
+    dogs = await Dog.find({ ...keyword })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+  }
+  
   res.json({ dogs, page, pages: Math.ceil(count / pageSize) })
 })
 

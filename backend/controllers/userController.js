@@ -16,6 +16,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      favourites: user.favourites,
       token: generateToken(user._id),
     })
   } else {
@@ -49,6 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      favourites: user.favourites,
       token: generateToken(user._id),
     })
   } else {
@@ -69,6 +71,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      favourites: user.favourites,
     })
   } else {
     res.status(404)
@@ -96,6 +99,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
+      favourites: user.favourites,
       token: generateToken(updatedUser._id),
     })
   } else {
@@ -159,6 +163,61 @@ const updateUser = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
+      favourites: user.favourites,
+    })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
+
+// @desc    Add user favourites
+// @route   POST /api/users/:userId/favourite/:dogId
+// @access  Private/Admin
+const addUserFavourite = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.userId)
+
+  if (user) {
+    
+    if (req.params.dogId != null && !user.favourites.includes(req.params.dogId)) {
+      user.favourites.push(req.params.dogId)
+    }
+
+    const updatedUser = await user.save()
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      favourites: updatedUser.favourites,
+    })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
+
+// @desc    Delete user favourites
+// @route   DELETE /api/users/:userId/favourite/:dogId
+// @access  Private/Admin
+const deleteUserFavourite = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.userId)
+
+  if (user) {
+    const index = user.favourites.indexOf(req.params.dogId);
+    if (index > -1) {
+      user.favourites.splice(index, 1); // 2nd parameter means remove one item only
+    }
+
+    const updatedUser = await user.save()
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      favourites: updatedUser.favourites,
     })
   } else {
     res.status(404)
@@ -175,4 +234,6 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  addUserFavourite,
+  deleteUserFavourite,
 }
