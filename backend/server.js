@@ -9,6 +9,7 @@ import connectDB from './config/db.js'
 import dogRoutes from './routes/dogRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import messageRoutes from './routes/messageRoutes.js'
 
 dotenv.config()
 
@@ -25,6 +26,7 @@ app.use(express.json())
 app.use('/api/dogs', dogRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/upload', uploadRoutes)
+app.use('/api/messages', messageRoutes)
 
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
