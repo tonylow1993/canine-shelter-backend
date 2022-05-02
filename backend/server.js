@@ -5,10 +5,11 @@ import colors from 'colors'
 import morgan from 'morgan'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
-
 import dogRoutes from './routes/dogRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import swaggerUi from 'swagger-ui-express'
+import swaggerDocument from './swagger.json'
 import messageRoutes from './routes/messageRoutes.js'
 
 dotenv.config()
@@ -22,15 +23,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(express.json())
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.use('/api/dogs', dogRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/upload', uploadRoutes)
 app.use('/api/messages', messageRoutes)
-
-app.get('/api/config/paypal', (req, res) =>
-  res.send(process.env.PAYPAL_CLIENT_ID)
-)
 
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
