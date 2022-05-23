@@ -11,11 +11,20 @@ const getDogs = asyncHandler(async (req, res) => {
 
   const keyword = req.query.keyword
     ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: 'i',
+      "$or": [
+        {
+          name: {
+            $regex: req.query.keyword,
+            $options: 'i',
+          },
         },
-      }
+        {
+          breed: {
+            $regex: req.query.keyword,
+            $options: 'i',
+          },
+        }
+      ]}
     : {}
     
   const ids = req.query.ids?.split(',')?.map(id => mongoose.Types.ObjectId(id))

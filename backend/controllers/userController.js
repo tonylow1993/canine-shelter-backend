@@ -29,7 +29,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body
+  const { name, email, password, code } = req.body
 
   const userExists = await User.findOne({ email })
 
@@ -38,10 +38,16 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('User already exists')
   }
 
+  if (code && code !== process.env.SIGN_UP_CODE) {
+    res.status(400)
+    throw new Error('Invalid sign up code')
+  }
+
   const user = await User.create({
     name,
     email,
     password,
+    isAdmin: !!code
   })
 
   if (user) {
@@ -49,7 +55,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
+      isAdmin: !!code,
       favourites: user.favourites,
       token: generateToken(user._id),
     })

@@ -23,6 +23,38 @@ const dogs = [
     breed: 'Mongrel',
     year: 1,
   },
+  {
+    name: 'Bella',
+    image: '/images/dog4.jpg',
+    location:
+      'Hong Kong Centre',
+    breed: 'Mongrel',
+    year: 13,
+  },
+  {
+    name: 'Flash',
+    image: '/images/dog5.jpg',
+    location:
+      'Hong Kong Centre',
+    breed: 'Mongrel',
+    year: 1,
+  },
+  {
+    name: 'Dylan',
+    image: '/images/dog6.jpg',
+    location:
+      'Hong Kong Centre',
+    breed: 'Mongrel',
+    year: 1,
+  },
+  {
+    name: 'Thor',
+    image: '/images/dog7.jpg',
+    location:
+      'Hong Kong Centre',
+    breed: 'Mongrel',
+    year: 1,
+  },
 ]
 
 export default dogs

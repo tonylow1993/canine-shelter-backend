@@ -42,6 +42,7 @@ NODE_ENV = development
 PORT = 5000
 MONGO_URI = mongodb uri
 JWT_SECRET = 'abc123'
+SIGN_UP_CODE = 'abc123'
 ```
 
 ### Install Dependencies (frontend & backend)
