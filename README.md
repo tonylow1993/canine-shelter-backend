@@ -5,23 +5,25 @@ This project was created based on [ProShop](https://github.com/bradtraversy/pros
 ## Features
 
 • Charity workers can register, log in, then add, remove and update details of the dogs available at their centre. Hint: consider requiring a known 'sign up code' during registration to confirm that the user is an employee.
+
 • The public can browse, search and filter the current list of dogs to help them find a suitable pet.
+
 • Authentication and authorisation prevent the API being used by non-registered users, except to do safe GET requests on dog listings.
+
 • All URI endpoints, HTTP verbs, and JSON data representations handled by the API are documented using the OpenAPI Specification (OAS) standard, version ≥2.0.
+
 • API endpoint functionality is thoroughly tested via a mock HTTP request library called by an appropriate automated testing framework.
+
 • Code and project documentation for both the front and back end components are provided.
+
 • A video demonstrating the core functionality of the developed API/web application is provided.
+
 2. (Important)
 • The API allows charity workers to upload photos to be associated to each listing.
+
 • Members of the public can sign up for a user account to let them create a list of 'favourites'.
+
 • The public can use the app to send a direct message to the charity expressing interest in any dog on the site. The charity can respond to the message through the app and can delete any message sent or received.
-3. (Useful)
-• When a new dog listing is made 'live' the API automatically posts a tweet to the charity's
-Twitter feed, with basic details of the new item.
-• Members of the public can register their account using an external authentication service. For example, their Google credentials can be used to log in via Google's OAuth2-based sign in process.
-4. (Nice to have)
-• Since some shelter staff are not very good at identifying dog breeds, but a dog's breed is an important property of its listing, the dog listing and editing interface offers a 'breed selection helper'. This uses the famous 'Dogs as a Service' (DaaS) API to access dog images from the Stanford University Dogs Dataset: https://dog.ceo/dog-api/.
-• Any other useful features that you come up with yourself.
 
 ## Usage
 
@@ -56,22 +58,18 @@ npm install
 ### Run
 
 ```
-# Run frontend (:3000) & backend (:5000)
-npm run dev
-
-# Run backend only
-npm run server
+# Run backend (:5000)
+npm start
 ```
 
-## Build & Deploy
+### Swagger
 
 ```
-# Create frontend prod build
-cd frontend
-npm run build
+# Generate swagger.json
+npm run swagger
 ```
 
-There is a Heroku postbuild script, so if you push to Heroku, no need to build manually for deployment to Heroku
+local swagger url: http://localhost:5000/api-docs/
 
 ### Seed Database
 
